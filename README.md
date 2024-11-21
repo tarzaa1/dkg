@@ -11,7 +11,7 @@ This document provides instructions for deploying the Distributed Knowledge Grap
    Install and configure the Kubernetes CLI tool, `kubectl`, with access to the cluster.
 
 3. **Docker Images**:
-   Ensure all required container images are accessible in your container registry.
+   Ensure all required container images are accessible.
 
 4. **Files**:
    The following YAML manifest files should be available in the current directory:
@@ -25,9 +25,27 @@ This document provides instructions for deploying the Distributed Knowledge Grap
 
 ---
 
-## **Deploying All Components**
+## **Deploying components**
 
-### Run the Deployment Script to run all components.
+### Run the deployment script to run all components.
 Use the provided `run_dkg_components.sh` script to deploy all components in the correct order.
 
-## **Adding another Cluster**
+---
+
+## **Adding Another Cluster**
+
+To integrate another cluster into the Distributed Knowledge Graph (DKG), follow these steps:
+
+1. **Clone the Repository**:
+
+2. **Modify the KubeInsights Configuration**:
+   - Edit the `kubeinsights.yaml` file in the cloned repository:
+     - Update the `ConfigMap` section with the following changes:
+       - Set the `KAFKA_BROKER_URL` to `$CONTROL_PLANE_IPADDR:30093`, where `$CONTROL_PLANE_IPADDR` is the IP address of the control plane of the main cluster.
+       - Update the `KAFKA_TOPIC` to the name of the new cluster (e.g., `cluster2`).
+
+3. **Deploy KubeInsights**:
+   - Apply the `kubeinsights.yaml` file to deploy KubeInsights in the new cluster:
+     ```bash
+     kubectl apply -f kubeinsights.yaml
+     ```
