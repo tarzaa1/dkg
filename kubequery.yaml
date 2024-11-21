@@ -20,10 +20,14 @@ spec:
         - name: check-pods-ready
           image: bitnami/kubectl
           command:
-          - 'sh'
-          - '-c'
-          - >
-            until kubectl get pods neo4j-0 -n dkg -o jsonpath='{.status.phase}' | grep Running; do echo waiting for pods; sleep 5; done
+            - 'sh'
+            - '-c'
+            - >
+              until kubectl get pod neo4j-0 -n dkg -o jsonpath='{.status.conditions[?(@.type=="Ready")].status}' | grep True; do
+                echo "Waiting for neo4j-0 pod to be ready...";
+                sleep 5;
+              done;
+              echo "neo4j-0 pod is ready."
       containers:
         - name: kubequery
           image: tareqz/kubequery:1.0
