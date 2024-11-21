@@ -30,13 +30,16 @@ This document provides instructions for deploying the Distributed Knowledge Grap
 ### Run the deployment script to run all components.
 Use the provided `run_dkg_components.sh` script to deploy all components in the correct order.
 
+### Access the KubeQuery API
+Access kubequery at `$CONTROL_PLANE_IPADDR:30094`, where `$CONTROL_PLANE_IPADDR` is the IP address of the control plane of the main cluster. Use the `/swagger/` for documentation.
+
 ---
 
 ## **Adding Another Cluster**
 
 To integrate another cluster into the Distributed Knowledge Graph (DKG), follow these steps:
 
-1. **Clone the Repository**:
+1. **Clone the Repository**
 
 2. **Modify the KubeInsights Configuration**:
    - Edit the `kubeinsights.yaml` file in the cloned repository:
