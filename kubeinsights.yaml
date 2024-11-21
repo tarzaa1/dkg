@@ -71,14 +71,22 @@ spec:
       containers:
         - name: kubeinsights
           image: tareqz/kubeinsights:1.1
-          env:
-            - name: KAFKA_BROKER_URL
-              value: "kafka-clusterip.dkg.svc:9092"
-            - name: KAFKA_TOPIC
-              value: "cluster1"
-            - name: KAFKA_GROUP_ID
-              value: "foo"
-            - name: DATA_DEST
-              value: "kafka"
+          envFrom:
+            - configMapRef:
+                name: kubeinsights-config
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubeinsights-config
+  namespace: dkg
+data:
+  KAFKA_BROKER_URL: "kafka-clusterip.dkg.svc:9092"
+  KAFKA_TOPIC: "cluster1"
+  KAFKA_GROUP_ID: "foo"
+  DATA_DEST: "kafka"
+
 
 
