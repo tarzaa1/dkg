@@ -27,11 +27,18 @@ This document provides instructions for deploying the Distributed Knowledge Grap
 
 ## **Deploying components**
 
-### Run the deployment script to run all components.
-Use the provided `run_dkg_components.sh` script to deploy all components in the correct order.
+1. **Clone the Repository**
 
-### Access the KubeQuery API
-Access kubequery at `$CONTROL_PLANE_IPADDR:30094`, where `$CONTROL_PLANE_IPADDR` is the IP address of the control plane of the main cluster. Use the `/swagger/` for documentation.
+2. **Setup Metrics Server**:
+    ```sh
+    kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+    ```
+
+2. **Run the deployment script**:
+   Use the provided `run_dkg_components.sh` script to deploy all components in the correct order.
+
+3. Access the KubeQuery API
+   Access kubequery at `$CONTROL_PLANE_IPADDR:30094`, where `$CONTROL_PLANE_IPADDR` is the IP address of the control plane of the main cluster. Use the `/swagger/` for documentation.
 
 ---
 
@@ -39,16 +46,26 @@ Access kubequery at `$CONTROL_PLANE_IPADDR:30094`, where `$CONTROL_PLANE_IPADDR`
 
 To integrate another cluster into the Distributed Knowledge Graph (DKG), follow these steps:
 
-1. **Clone the Repository**
+1. **Expose Kafka**:
+   On the current cluster, update the second advertised listener in `kafka.yaml` (line 63) to the ip address of your control plane node.
 
-2. **Modify the KubeInsights Configuration**:
+2. **Login to the Control plane of the new cluster and clone the repository**
+
+3. **Modify the KubeInsights Configuration**:
    - Edit the `kubeinsights.yaml` file in the cloned repository:
      - Update the `ConfigMap` section with the following changes:
        - Set the `KAFKA_BROKER_URL` to `$CONTROL_PLANE_IPADDR:30093`, where `$CONTROL_PLANE_IPADDR` is the IP address of the control plane of the main cluster.
        - Update the `KAFKA_TOPIC` to the name of the new cluster (e.g., `cluster2`).
 
-3. **Deploy KubeInsights**:
+4. **Setup Metrics Server**:
+    ```sh
+    kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+    ```
+
+5. **Deploy KubeInsights**:
    - Apply the `kubeinsights.yaml` file to deploy KubeInsights in the new cluster:
      ```bash
      kubectl apply -f kubeinsights.yaml
      ```
+
+6. **You can now access the update graph via the KubeQuery API**
