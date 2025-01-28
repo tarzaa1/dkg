@@ -38,7 +38,7 @@ This document provides instructions for deploying the Distributed Knowledge Grap
    Use the provided `run_dkg_components.sh` script to deploy all components in the correct order.
 
 3. Access the KubeQuery API
-   Access kubequery at `$CONTROL_PLANE_IPADDR:30094`, where `$CONTROL_PLANE_IPADDR` is the IP address of the control plane of the main cluster. Use the `/swagger/` for documentation.
+   Access kubequery at `$CONTROL_PLANE_IPADDR:30094`, where `$CONTROL_PLANE_IPADDR` is the IP address of the control plane of the main cluster. Use the `/swagger/` endpoint for documentation.
 
 ---
 
@@ -49,7 +49,7 @@ To integrate another cluster into the Distributed Knowledge Graph (DKG), follow 
 1. **Expose Kafka**:
    On the current cluster, update the second advertised listener in `kafka.yaml` (line 63) to the ip address of your control plane node.
 
-2. **Login to the control plane of the new cluster**
+2. **Login to the control plane of the new cluster**:
    On the new cluster, you will only need to run kubeinsights inside the dkg namespace. You can either clone the entire repo or just copy the files `namespace.yaml` and `kubeinsights.yaml`.
 
 3. **Modify the KubeInsights Configuration**:
@@ -64,7 +64,7 @@ To integrate another cluster into the Distributed Knowledge Graph (DKG), follow 
     ```
 
 5. **Deploy KubeInsights**:
-   - Apply the `kubeinsights.yaml` file to deploy KubeInsights in the new cluster:
+   - Apply the `namespace.yaml` and `kubeinsights.yaml` files to deploy KubeInsights in the new cluster:
      ```bash
      kubectl apply -f namespace.yaml
      kubectl apply -f kubeinsights.yaml
