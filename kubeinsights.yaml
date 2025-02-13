@@ -70,7 +70,8 @@ spec:
           until kubectl get pods kafka-0 -n dkg -o jsonpath='{.status.phase}' | grep Running; do echo waiting for pods; sleep 5; done
       containers:
         - name: kubeinsights
-          image: tareqz/kubeinsights:1.1
+          image: tareqz/kubeinsights:1.2
+          imagePullPolicy: Always
           envFrom:
             - configMapRef:
                 name: kubeinsights-config

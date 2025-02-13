@@ -30,7 +30,8 @@ spec:
               echo "neo4j-0 pod is ready."
       containers:
         - name: kubequery
-          image: tareqz/kubequery:1.0
+          image: tareqz/kubequery:1.1
+          imagePullPolicy: Always
           ports:
             - containerPort: 5000
           env:
