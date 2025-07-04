@@ -1,35 +1,23 @@
-# **DKG Components Deployment Guide**
+# **KubeGraph**
 
-This document provides instructions for deploying the Distributed Knowledge Graph (DKG) components in a Kubernetes cluster. The deployment ensures all components are correctly applied in the required order, starting with the namespace and dependencies.
+KubeGraph enables the modeling of kubernetes objects such as node, pods, deployment, configmaps, etc. and their interconnections as a propoerty graph using 5 containerized components. In this repo you can fine manifest files for each of the components and a simple shell script that ensures they are correctly applied in the required order.
 
-## **Prerequisites**
+## **Compnents**
 
-1. **Kubernetes Cluster**:
-   Ensure you have access one or more Kubernetes clusters.
+1. **KubeInsights**:
+   Retrieves the metadata of Kubernetes objects using the kube-api-server and submits updates to a Kafka broker. It also monitors the cluster for any new events (e.g., a node being added or removed, a pod being added, deleted or updated, etc.)
 
-2. **Kubectl**:
-   Install and configure the Kubernetes CLI tool, `kubectl`, with access to the cluster.
+2. **KubeGrapher**:
+   Consumes state updates from the event broker as JSON blobs; transforms and stores these updates into Neo4J using a the Cypher query language.
 
-3. **Docker Images**:
-   Ensure all required container images are accessible.
-
-4. **Files**:
-   The following YAML manifest files should be available in the current directory:
-   - `namespace.yaml`: Defines the `dkg` namespace.
-   - `neo4j.yaml`: Defines the Neo4j authentication secret, statfulset, and service.
-   - `kafka.yaml`: Defines the Zookeeper and Kafka statefulsets and services.
-   - `kubeinsights.yaml`: Defines the KubeInsights serviceaccount, clusterrole, rolebinding, deployment, and configmap.
-   - `kubegrapher.yaml`: Defines the KubeGrapher deployment and configmap.
-   - `kubequery.yaml`: Defines the KubeQuery deployment and nodeport service.
-   - `dependencies.yaml`: Defines a serviceaccount, role, and rolebinding used by various components.
+3. **KubeQuery**:
+   Implements a RESTful API (with Flask) which interfaces with the Neo4j to facilitate query operations via various endpoints that implement Cypher queries.
 
 ---
 
 ## **Deploying components on the main cluster**
 
-1. **Clone the Repository**
-
-2. **Setup Metrics Server**:
+1. **Setup Metrics Server**:
     ```sh
     kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
     ```
