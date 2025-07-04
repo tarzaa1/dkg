@@ -1,16 +1,16 @@
 # **KubeGraph**
 
-KubeGraph enables the modeling of kubernetes objects such as node, pods, deployment, configmaps, etc. and their interconnections as a propoerty graph using 5 containerized components. In this repo you can fine manifest files for each of the components and a simple shell script that ensures they are correctly applied in the required order.
+KubeGraph enables the modeling of kubernetes objects such as Nodes, Pods, Deployments, Configmaps, etc. and their relationships as a propoerty graph using 5 containerized components. In this repo, you can fined manifest files for each of the components and a simple shell script that ensures they are applied in the required order.
 
-## **Compnents**
+## **Components**
 
-1. **KubeInsights**:
+1. **[KubeInsights](https://github.com/tarzaa1/kubeinsights)**:
    Retrieves the metadata of Kubernetes objects using the kube-api-server and submits updates to a Kafka broker. It also monitors the cluster for any new events (e.g., a node being added or removed, a pod being added, deleted or updated, etc.)
 
-2. **KubeGrapher**:
+2. **[KubeGrapher](https://github.com/tarzaa1/kubegrapher)**:
    Consumes state updates from the event broker as JSON blobs; transforms and stores these updates into Neo4J using a the Cypher query language.
 
-3. **KubeQuery**:
+3. **[KubeQuery](https://github.com/tarzaa1/kubequery)**:
    Implements a RESTful API (with Flask) which interfaces with the Neo4j to facilitate query operations via various endpoints that implement Cypher queries.
 
 ---
