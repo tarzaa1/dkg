@@ -30,6 +30,12 @@ KubeGraph enables the modeling of kubernetes objects such as Nodes, Pods, Deploy
 
 ---
 
+## **Benchmarking Neo4j againt Memgraph**
+
+Memgraph is an in-memory alternative to Neo4j implemented in C++. It can be a drop in replacement to Neo4j in our architecture due to its compatibility with the Neo4j python driver. To run the benchmark we did you will need to deploy Kubequery natively on the host and not include it in the k8s deployment provided here. The benchmark sits in its own branch in the **[KubeQuery](https://github.com/tarzaa1/kubequery/tree/benchmarking)** repo.
+
+---
+
 ## **Adding Another Cluster**
 
 To integrate another cluster into the Distributed Knowledge Graph (DKG), follow these steps:
