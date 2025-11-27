@@ -38,7 +38,7 @@ spec:
               echo "All dependencies are ready."
       containers:
         - name: kubegrapher
-          image: tareqz/kubegrapher:1.2
+          image: tareqz/kubegrapher:1.2.1
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
