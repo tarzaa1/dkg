@@ -70,7 +70,7 @@ spec:
           until kubectl get pods kafka-0 -n dkg -o jsonpath='{.status.phase}' | grep Running; do echo waiting for pods; sleep 5; done
       containers:
         - name: kubeinsights
-          image: tareqz/kubeinsights:1.4
+          image: tareqz/kubeinsights:1.4.1
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
@@ -88,6 +88,7 @@ data:
   KAFKA_TOPIC: "cluster1"
   KAFKA_GROUP_ID: "foo"
   DATA_DEST: "kafka"
+  NAMESPACE: "default"
 
 
 
